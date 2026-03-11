@@ -18,12 +18,15 @@ shinyServer(
     #shinyjs::disable("downloadPlotDemographics"); shinyjs::disable("downloadPlotVC")
     #shinyjs::disable("downloadPlotHuman"); shinyjs::disable("downloadPlotR0")
     output$plotTrajectory=renderPlotly({plotTrajectoryPlotLy(IVM_traj)})
+    output$plotTrajectoryHumans = renderPlotly({plotTrajectoryHumansPlotLy(IVM_traj)})
     output$IVM_Runtime=renderTable(IVM_traj)
     output$plotDemographics = renderPlotly({barChartMosquitoDemographicsPlotLy(IVM_traj)})
-    #output$plotVC = renderPlotly({plotVCPlotLy(IVM_traj)})
-    #output$plotR0 = renderPlotly({plotR0PlotLy(IVM_traj)})
-    output$plotEIR = renderPlotly({plotEIRVCR0PlotLy(IVM_traj)})
-    output$plotHuman = renderPlotly({plotTrajectoryHumansPlotLy(IVM_traj)})
+    output$plotVC <- renderPlotly({plotVCPlotLy(IVM_traj)})
+    output$plotR0 <- renderPlotly({r<-plotR0(IVM_traj);ggplotly(r)})
+    output$plotEIR <- renderPlotly({p<- plotEIR(IVM_traj);
+                                               ggplotly(p)})# = renderPlotly({plotEIRVCR0PlotLy(IVM_traj)})
+    output$plotTrajectoryHumans <- renderPlotly({h<- plotTrajectoryHumans(IVM_traj);
+                                                  ggplotly(h)})#renderPlotly({plotTrajectoryHumansPlotLy(IVM_traj)})
     #############################################################################
     # CLICK EVENTS ##############################################################
     observeEvent(input$buttonTest,{cat("Button event!\n")})

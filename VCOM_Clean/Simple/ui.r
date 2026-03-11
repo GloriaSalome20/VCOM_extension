@@ -51,7 +51,8 @@ WORKING_MESSAGE_STYLE <<- "#loadmessage {
 # PRIME SYSTEM  ###################################################################
 MOSQUITO_PARAMETERS = getAnGambiaeParameters()
 TRANSMISSION_PARAMETERS = getAdditionalTransmissionParameters(epsilon0 = INITIAL_EIR/365)
-INTERVENTION_PARAMETERS = getInterventionsParameters(time_ITN_on=INITIAL_ITN_TIME,ITNcov=INITIAL_ITN_COVERAGE)
+INTERVENTION_PARAMETERS = getInterventionsParameters(time_ITN_on=INITIAL_ITN_TIME,
+                                                     ITNcov=INITIAL_ITN_COVERAGE)
 theta <<- getTheta(interventionParameters=INTERVENTION_PARAMETERS)
 #initialParametersValues <<- importCSVParametersFromDirectory("SetupTemplates/SETUP_MosquitoLifeCycleParameters.csv")
 #theta <<- parseImportedCSVParameters(initialParametersValues)
@@ -64,12 +65,15 @@ shinyUI(
   fluidPage(theme = "cerulean.css",
     titlePanel(h1("VCOM: Simple",align="center"),windowTitle="VCOM: Simple"),
     titlePanel(h4("Vector Control Optimization Model",align="center")),
-    titlePanel(h4(tags$a(class="btn btn-default", href="http://chipdelmal.github.io/VCOM/", "Home", style="display: block; width: 100%;"),align="center")),
+    titlePanel(h4(tags$a(class="btn btn-default",
+                         href="http://chipdelmal.github.io/VCOM/", "Home", 
+                         style="display: block; width: 100%;"),align="center")),
     ###############################################################################
     useShinyjs(),
     tags$script(ENTER_DOWN_RUN),
     tags$head(tags$style(type="text/css",WORKING_MESSAGE_STYLE)),
-    conditionalPanel(condition="$('html').hasClass('shiny-busy')",tags$div("Working...",id="loadmessage")),
+    conditionalPanel(condition="$('html').hasClass('shiny-busy')",
+                     tags$div("Working...",id="loadmessage")),
     ###############################################################################
 #     navbarPage("----",id="nav",
         #-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
@@ -198,15 +202,21 @@ shinyUI(
               plotlyOutput("plotEIR"),
               fluidRow(h1("")),
               fluidRow(h1("")),
+              plotlyOutput("plotVC"),
+              fluidRow(h1("")),
+              fluidRow(h1("")),
+              plotlyOutput("plotR0"),
+              fluidRow(h1("")),
+              fluidRow(h1("")),
               plotlyOutput("plotTrajectory"),
               fluidRow(h1("")),
               fluidRow(h1("")),
               plotlyOutput("plotDemographics"),
               fluidRow(h1("")),
               fluidRow(h1("")),
-              #plotlyOutput("plotVC"),
-              #plotlyOutput("plotR0"),
-              plotlyOutput("plotHuman")
+              plotlyOutput("plotTrajectoryHumans")
+              
+            
             )
           ),
           tags$div(
